@@ -25,6 +25,9 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 Tem o intuito de colocar em pratica meus conhecimentos adquiridos em ReactJS consumindo uma API.
 
+## Deployment
+
+Url: (https://guide-valorant.vercel.app/)
 
 ## :memo: Licença
 
