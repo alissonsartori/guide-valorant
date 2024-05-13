@@ -1,8 +1,18 @@
 import { SimpleGrid, Image, Box } from "@chakra-ui/react";
-
 import "./home-styles.css";
+import agentsURL from "../../../public/agents.png"
+import weaponsURl from "../../../public/weapons.png"
+import spraysURL from "../../../public/sprays.png"
+import buddiesURL from "../../../public/gunbuddies.png"
+import mapsURL from "../../../public/maps.png"
+import displayiconURL from "../../../public/displayicon.png"
+import cardURL from "../../../public/card.png"
+
+
 
 const AppHome = () => {
+
+
   return (
     <div className="body">
       <SimpleGrid columns={[1, 2]} spacing={10}>
@@ -12,7 +22,7 @@ const AppHome = () => {
             <Image
               boxSize="300px"
               objectFit="cover"
-              src="../public/agents.png"
+              src={agentsURL}
               alt="agents"
             />
           </div>
@@ -23,29 +33,18 @@ const AppHome = () => {
             <Image
               boxSize="300px"
               objectFit="cover"
-              src="../public/weapons.png"
+              src={weaponsURl}
               alt="weapons"
             />
           </div>
         </a>
-        {/* <a href={`/tiers`}>
-          <div className="card-container">
-            <h1>Tiers</h1>
-            <Image
-              boxSize="300px"
-              objectFit="cover"
-              src="../public/ranks.png"
-              alt="ranks"
-            />
-          </div>
-        </a> */}
         <a href={`/sprays`}>
           <div className="card-container">
             <h1>Sprays</h1>
             <Image
               boxSize="300px"
               objectFit="cover"
-              src="../public/sprays.png"
+              src={spraysURL}
               alt="sprays"
             />
           </div>
@@ -56,7 +55,7 @@ const AppHome = () => {
             <Image
               boxSize="300px"
               objectFit="cover"
-              src="../public/gunbuddies.png"
+              src={buddiesURL}
               alt="buddies"
             />
           </div>
@@ -67,7 +66,7 @@ const AppHome = () => {
             <Image
               boxSize="300px"
               objectFit="cover"
-              src="../public/maps.png"
+              src={mapsURL}
               alt="maps"
             />
           </div>
@@ -78,7 +77,7 @@ const AppHome = () => {
             <Image
               boxSize="300px"
               objectFit="cover"
-              src="../public/displayicon.png"
+              src={displayiconURL}
               alt="bundles"
             />
           </div>
@@ -89,7 +88,7 @@ const AppHome = () => {
             <Image
               boxSize="300px"
               objectFit="cover"
-              src="../public/card.png"
+              src={cardURL}
               alt="bundles"
             />
           </div>

@@ -2,6 +2,8 @@ import "./header-styles.css";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from "@chakra-ui/react";
 import AppMenu from "./AppMenu";
 import React, { useState, useEffect } from "react";
+import riotLogoUrl from "../../../public/RIOTLOGO.png"
+import logoUrl from "../../../public/logo.png"
 
 const AppHome = () => {
   const [isMobile, setIsMobile] = useState(() => {
@@ -26,8 +28,8 @@ const AppHome = () => {
   return (
     <div className="header-container">
       <div className="logo">
-        <img src="public/RIOTLOGO.png" className="riot-logo" alt="Logo" />
-        <img src="public/logo.png" className="logo" alt="Logo" />
+        <img src={riotLogoUrl} className="riot-logo" alt="Logo" />
+        <img src={logoUrl} className="logo" alt="Logo" />
       </div>
       <nav>
         {isMobile ? <AppMenu /> : null}
