@@ -1,0 +1,32 @@
+@font-face {
+  font-family: "valorant-font";
+  src: url("../../../public/Valorant\ Font.ttf") format("truetype");
+}
+.body {
+  display: flex;
+  flex-direction: column;
+  background-color: #0f1923;
+  color: #ffffff;
+  padding: 30px;
+}
+
+h1 {
+  font-family: "valorant-font";
+  font-size: 30px;
+}
+
+.p-more {
+  font-family: "valorant-font";
+  font-size: 20px;
+}
+
+.p-more:hover {
+  color: #ff4655;
+  border-bottom: solid 1px #ff4655;
+}
+
+.h1-header {
+  display: flex;
+  justify-content: center;
+}
+

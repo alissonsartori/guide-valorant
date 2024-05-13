@@ -1,0 +1,48 @@
+@import url("https://fonts.googleapis.com/css2?family=Bowlby+One+SC&display=swap");
+
+.body-agent {
+  display: flex;
+}
+.header{
+  padding: 10px;
+}
+img {
+  width: 38rem;
+  padding-bottom: 20px;
+}
+
+.role {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.role-types {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.img-role,
+.img-ability {
+  width: 3em;
+}
+
+p {
+  padding: 10px;
+  font-family: "Bowlby One SC", sans-serif;
+}
+
+.abilities {
+  display: flex;
+  align-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #FF4655;
+}
+
+span {
+  color: #ff4655;
+}

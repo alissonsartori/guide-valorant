@@ -1,0 +1,13 @@
+.footer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    color: gray;
+    padding: 10px;
+}
+
+p :hover{
+    color: #FF4655;
+}

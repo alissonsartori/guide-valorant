@@ -1,0 +1,26 @@
+@font-face {
+  font-family: "valorant-font";
+  src: url("../../../public/Valorant\ Font.ttf") format("truetype");
+}
+
+h1 {
+  font-family: "valorant-font";
+  font-size: 50px;
+  padding: 30px;
+}
+
+.card-container {
+  border-color: #ff4655;
+  border-width: 1px;
+  border-style: solid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 600px) {
+  .card-container {
+    flex-direction: column;
+  }
+}
