@@ -8,6 +8,7 @@ import {
   CircularProgress
 } from "@chakra-ui/react";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
+import "../../global-styles.css"
 
 const AppAgents = () => {
   const [data, setData] = useState([]);
@@ -32,7 +33,7 @@ const AppAgents = () => {
   }, []);
 
   return (
-    <div className="body">
+    <div className="body-grid">
       <div className="header">
         <a href="/">
           <Icon

@@ -1,5 +1,6 @@
 import { SimpleGrid, Image, Box } from "@chakra-ui/react";
 import "./home-styles.css";
+import "../../global-styles.css";
 import agentsURL from "../../../public/agents.png"
 import weaponsURl from "../../../public/weapons.png"
 import spraysURL from "../../../public/sprays.png"
@@ -14,7 +15,7 @@ const AppHome = () => {
 
 
   return (
-    <div className="body">
+    <div className="body-home">
       <SimpleGrid columns={[1, 2]} spacing={10}>
         <a href={`/agents`}>
           <div className="card-container">

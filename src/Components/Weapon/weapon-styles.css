@@ -1,7 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Bowlby+One+SC&display=swap");
 @font-face {
   font-family: "valorant-font";
-  src: url("../../../public/Valorant\ Font.ttf") format("truetype");
+  src: url("../../../public/Valorant/Font.ttf") format("truetype");
+}
+
+.body-weapon {
+  background-color: #0f1923;
+  color: #ffffff;
 }
 
 .weaponStats {

@@ -3,6 +3,7 @@ import "./agent-styles.css";
 import { Card, CardHeader, CardBody, Icon } from "@chakra-ui/react";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
 import { useParams } from "react-router-dom";
+import "../../global-styles.css"
 
 const AppAgent = () => {
   const [data, setData] = useState(null);
@@ -28,7 +29,7 @@ const AppAgent = () => {
   }, []);
 
   return (
-    <div className="body">
+    <div className="body-agent">
       {error && <div>Error: {error}</div>}
       {data && (
         <div>

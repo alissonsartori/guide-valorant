@@ -11,6 +11,8 @@ import {
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
+import "../../global-styles.css"
+
 
 const AppMaps = () => {
   const [data, setData] = useState([]);
@@ -34,7 +36,7 @@ const AppMaps = () => {
   }, []);
 
   return (
-    <div className="body">
+    <div className="body-grid">
       <div className="header">
         <a href="/">
           <Icon

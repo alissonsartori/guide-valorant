@@ -8,8 +8,11 @@ import {
   Box,
   Image,
 } from "@chakra-ui/react";
+import "./skins-styles.css"
 import { ChevronLeftIcon } from "@chakra-ui/icons";
 import { useParams } from "react-router-dom";
+import "../../global-styles.css"
+import "./skins-styles.css"
 
 const AppAgent = () => {
   const [data, setData] = useState(null);
@@ -54,7 +57,7 @@ const AppAgent = () => {
   }, []);
 
   return (
-    <div className="body">
+    <div className="body-grid">
       {error && <div>Error: {error}</div>}
       {data && (
         <div>

@@ -38,7 +38,7 @@ const AppAgents = () => {
   }, []);
 
   return (
-    <div className="body">
+    <div className="body-agents">
       <div className="header">
         <a href="/">
           <Icon

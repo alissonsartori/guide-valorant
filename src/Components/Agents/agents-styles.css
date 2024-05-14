@@ -1,8 +1,9 @@
 @font-face {
   font-family: "valorant-font";
-  src: url("../../../public/Valorant\ Font.ttf") format("truetype");
+  src: url("../../../public/ValorantFont.ttf") format("truetype");
 }
-.body {
+.body-agents{
+  font-family: "valorant-font";
   display: flex;
   flex-direction: column;
   background-color: #0f1923;

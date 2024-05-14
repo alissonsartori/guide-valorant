@@ -3,6 +3,13 @@
   src: url("../../../public/ValorantFont.ttf") format("truetype");
 }
 
+.body-home {
+  font-family: "valorant-font";
+  padding: 30px;
+  background-color: #0f1923;
+  color: #ffffff;
+}
+
 h1 {
   font-family: "valorant-font";
   font-size: 50px;

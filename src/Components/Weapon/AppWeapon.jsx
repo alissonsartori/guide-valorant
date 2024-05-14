@@ -37,7 +37,7 @@ const AppWeapon = () => {
   }, []);
 
   return (
-    <div className="body">
+    <div className="body-weapon">
       {error && <div>Error: {error}</div>}
       {data && (
         <div>

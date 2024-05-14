@@ -2,10 +2,10 @@
 
 .body-agent {
   display: flex;
+  background-color: #0f1923;
+  color: #ffffff;
 }
-.header{
-  padding: 10px;
-}
+
 img {
   width: 38rem;
   padding-bottom: 20px;

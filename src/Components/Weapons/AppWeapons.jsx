@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
+import "./weapons-styles.css"
 
 const AppWeapons = () => {
   const [data, setData] = useState([]);
@@ -35,7 +36,7 @@ const AppWeapons = () => {
   }, []);
 
   return (
-    <div className="body">
+    <div className="body-weapons">
       <div className="header">
         <a href="/">
           <Icon

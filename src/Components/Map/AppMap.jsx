@@ -27,7 +27,7 @@ const AppMap = () => {
   }, []);
 
   return (
-    <div className="body">
+    <div className="body-grid">
       {error && <div>Error: {error}</div>}
       {data && (
         <div>
