@@ -12,10 +12,11 @@ import {
 import { ChevronLeftIcon } from "@chakra-ui/icons";
 import { useParams } from "react-router-dom";
 import "./weapon-styles.css";
+import { DataWeapon } from "../../../types";
 
 const AppWeapon = () => {
-  const [data, setData] = useState(null);
-  const [error, setError] = useState("");
+  const [data, setData] = useState<DataWeapon | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const { id } = useParams();
 
@@ -32,16 +33,17 @@ const AppWeapon = () => {
       setError(error.message);
     }
   };
+
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [id]);
 
   return (
     <div className="body-weapon">
       {error && <div>Error: {error}</div>}
       {data && (
         <div>
-          <div className="header">
+          <div className="header-weapon">
             <a href="/weapons">
               <Icon
                 as={ChevronLeftIcon}
@@ -62,7 +64,7 @@ const AppWeapon = () => {
               alignItems={"center"}
             >
               <h1>{data.displayName}</h1>
-              <img src={data.displayIcon} alt="" />
+              {data.displayIcon && <img src={data.displayIcon} alt="" />}
             </CardHeader>
             <CardBody
               display={"flex"}
@@ -112,26 +114,32 @@ const AppWeapon = () => {
                   </p>
                 </div>
                 <div>
-                  <p>{data.shopData ? data.weaponStats.fireRate : "N/A"}</p>
-                  <p>{data.shopData ? data.weaponStats.magazineSize : "N/A"}</p>
+                  <p>{data.weaponStats ? data.weaponStats.fireRate : "N/A"}</p>
                   <p>
-                    {data.shopData
+                    {data.weaponStats ? data.weaponStats.magazineSize : "N/A"}
+                  </p>
+                  <p>
+                    {data.weaponStats
                       ? data.weaponStats.runSpeedMultiplier
                       : "N/A"}
                   </p>
                   <p>
-                    {data.shopData ? data.weaponStats.equipTimeSeconds : "N/A"}
+                    {data.weaponStats
+                      ? data.weaponStats.equipTimeSeconds
+                      : "N/A"}
                   </p>
                   <p>
-                    {data.shopData ? data.weaponStats.reloadTimeSeconds : "N/A"}
+                    {data.weaponStats
+                      ? data.weaponStats.reloadTimeSeconds
+                      : "N/A"}
                   </p>
                   <p>
-                    {data.shopData
+                    {data.weaponStats
                       ? data.weaponStats.firstBulletAccuracy
                       : "N/A"}
                   </p>
                   <p>
-                    {data.shopData
+                    {data.weaponStats
                       ? data.weaponStats.shotgunPelletCount
                       : "N/A"}
                   </p>
@@ -148,10 +156,14 @@ const AppWeapon = () => {
                 <span>Skins</span>
               </h1>
               <SimpleGrid columns={[1, 3]} spacing={10}>
-                {data.skins
+                {(data.skins || [])
                   .filter((skin) => !skin.displayName.includes("Standard"))
                   .map((skin, index) => (
-                    <Box key={index} border={"1px solid #FF4655"} className="weapon-container">
+                    <Box
+                      key={index}
+                      border={"1px solid #FF4655"}
+                      className="weapon-container"
+                    >
                       {skin.displayIcon ? (
                         <img src={skin.displayIcon} alt="skin" />
                       ) : (

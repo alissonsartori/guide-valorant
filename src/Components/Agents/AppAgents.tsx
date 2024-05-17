@@ -1,31 +1,34 @@
 import React, { useState, useEffect } from "react";
+import "./agents-styles.css";
 import {
   SimpleGrid,
   Card,
   CardBody,
   CardFooter,
-  Box,
   Icon,
   Button,
-  CircularProgress
+  CircularProgress,
+  Box,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
-import "../../global-styles.css"
+import { Link } from "react-router-dom";
+import { DataAgents } from "../../../types";
 
-
-const AppMaps = () => {
-  const [data, setData] = useState([]);
+const AppAgents = () => {
+  const [data, setData] = useState<DataAgents[]>([])
   const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://valorant-api.com/v1/maps");
+        const response = await fetch(
+          "https://valorant-api.com/v1/agents?isPlayableCharacter=true"
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
         const jsonData = await response.json();
+
         setData(jsonData.data);
       } catch (error) {
         setError(error.message);
@@ -36,7 +39,7 @@ const AppMaps = () => {
   }, []);
 
   return (
-    <div className="body-grid">
+    <div className="body-agents">
       <div className="header">
         <a href="/">
           <Icon
@@ -47,7 +50,7 @@ const AppMaps = () => {
           />
         </a>
         <div className="h1-header">
-          <h1>Maps</h1>
+          <h1>Agents</h1>
         </div>
       </div>
       {error && <div>Error: {error}</div>}
@@ -63,7 +66,7 @@ const AppMaps = () => {
           <CircularProgress isIndeterminate color="#FF4655" />
         </Box>
       ) : (
-        <SimpleGrid columns={[1, 4]} spacing={10}>
+        <SimpleGrid columns={[1, 2]} spacing={10}>
           {data.map((item, index) => (
             <Card
               key={index}
@@ -79,14 +82,17 @@ const AppMaps = () => {
                 flexDirection={"column"}
                 alignItems={"center"}
                 gap={"20px"}
+                padding={"none"}
               >
-                <Box>
-                  <img src={item.listViewIconTall} alt="" />
-                </Box>
-                <p>{item.displayName}</p>
+                {item.bustPortrait ? (
+                  <img src={item.bustPortrait} alt="" />
+                ) : (
+                  <p>Imagem não disponível</p>
+                )}
+                <h1>{item.displayName}</h1>
               </CardBody>
               <CardFooter>
-                <Link to={`/maps/${item.uuid}`}>
+                <Link to={`/agents/${item.uuid}`}>
                   <Button
                     border={"1px solid #FF4655"}
                     variant="outline"
@@ -104,4 +110,4 @@ const AppMaps = () => {
   );
 };
 
-export default AppMaps;
+export default AppAgents;

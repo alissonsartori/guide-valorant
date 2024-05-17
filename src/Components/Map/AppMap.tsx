@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Card, CardHeader, CardBody, Icon } from "@chakra-ui/react";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
 import { useParams } from "react-router-dom";
+import { DataMap } from "../../../types";
 
 const AppMap = () => {
-  const [data, setData] = useState(null);
-  const [error, setError] = useState("");
+  const [data, setData] = useState<DataMap | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const { id } = useParams();
 
@@ -60,7 +61,7 @@ const AppMap = () => {
               backgroundPosition={"center"}
               height={"50vh"}
               marginBottom={"20px"}
-              backgroundSize={'cover'}
+              backgroundSize={"cover"}
             >
               <h1>{data.displayName}</h1>
             </CardHeader>
@@ -70,10 +71,10 @@ const AppMap = () => {
               alignItems={"center"}
               justifyContent={"space-around"}
               css={`
-              @media (max-width: 480px) {
-                flex-direction: column;
-              }
-            `}
+                @media (max-width: 480px) {
+                  flex-direction: column;
+                }
+              `}
             >
               <img src={data.displayIcon} alt="" />
               <p>

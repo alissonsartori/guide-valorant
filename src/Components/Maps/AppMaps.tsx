@@ -1,16 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { SimpleGrid, Card, CardBody, Image, Box, Icon, CircularProgress } from "@chakra-ui/react";
+import {
+  SimpleGrid,
+  Card,
+  CardBody,
+  CardFooter,
+  Box,
+  Icon,
+  Button,
+  CircularProgress,
+} from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
-import "../../global-styles.css"
+import "../../global-styles.css";
+import { DataMaps } from "../../../types";
 
-const AppSpray = () => {
-  const [data, setData] = useState([]);
+const AppMaps = () => {
+  const [data, setData] = useState<DataMaps[]>([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://valorant-api.com/v1/sprays");
+        const response = await fetch("https://valorant-api.com/v1/maps");
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
@@ -36,7 +47,7 @@ const AppSpray = () => {
           />
         </a>
         <div className="h1-header">
-          <h1>Sprays</h1>
+          <h1>Maps</h1>
         </div>
       </div>
       {error && <div>Error: {error}</div>}
@@ -52,7 +63,7 @@ const AppSpray = () => {
           <CircularProgress isIndeterminate color="#FF4655" />
         </Box>
       ) : (
-        <SimpleGrid columns={[1, 5]} spacing={10}>
+        <SimpleGrid columns={[1, 4]} spacing={10}>
           {data.map((item, index) => (
             <Card
               key={index}
@@ -70,13 +81,21 @@ const AppSpray = () => {
                 gap={"20px"}
               >
                 <Box>
-                  {item.fullTransparentIcon && (
-                    <Image src={item.fullTransparentIcon} alt="icon" />
-                  )}
-                  {!item.fullTransparentIcon && <p>Imagem não encontrada</p>}
+                  <img src={item.listViewIconTall} alt="" />
                 </Box>
                 <p>{item.displayName}</p>
               </CardBody>
+              <CardFooter>
+                <Link to={`/maps/${item.uuid}`}>
+                  <Button
+                    border={"1px solid #FF4655"}
+                    variant="outline"
+                    color={"#FF4655"}
+                  >
+                    More
+                  </Button>
+                </Link>
+              </CardFooter>
             </Card>
           ))}
         </SimpleGrid>
@@ -85,4 +104,4 @@ const AppSpray = () => {
   );
 };
 
-export default AppSpray;
+export default AppMaps;
