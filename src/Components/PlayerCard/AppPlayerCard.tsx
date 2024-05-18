@@ -3,26 +3,27 @@ import {
   SimpleGrid,
   Card,
   CardBody,
-  Image,
-  Box,
   Icon,
+  Box,
   CircularProgress,
 } from "@chakra-ui/react";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
-import "../../global-styles.css"
+import "../../global-styles.css";
+import { DataPlayerCard } from "../../../types";
 
-const AppSpray = () => {
-  const [data, setData] = useState([]);
-  const [error, setError] = useState("");
+const AppAgents = () => {
+  const [data, setData] = useState<DataPlayerCard[]>([]);
+  const [error, setError] = useState<string | null>("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://valorant-api.com/v1/buddies");
+        const response = await fetch("https://valorant-api.com/v1/playercards");
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
         const jsonData = await response.json();
+
         setData(jsonData.data);
       } catch (error) {
         setError(error.message);
@@ -44,7 +45,7 @@ const AppSpray = () => {
           />
         </a>
         <div className="h1-header">
-          <h1>Buddies</h1>
+          <h1>Players Cards</h1>
         </div>
       </div>
       {error && <div>Error: {error}</div>}
@@ -60,7 +61,7 @@ const AppSpray = () => {
           <CircularProgress isIndeterminate color="#FF4655" />
         </Box>
       ) : (
-        <SimpleGrid columns={[2, 5]} spacing={10}>
+        <SimpleGrid columns={[1, 5]} spacing={10}>
           {data.map((item, index) => (
             <Card
               key={index}
@@ -77,10 +78,12 @@ const AppSpray = () => {
                 alignItems={"center"}
                 gap={"20px"}
               >
-                <Box>
-                  <Image src={item.displayIcon} alt="icon" width={"10em"} />
-                </Box>
-                <p>{item.displayName}</p>
+                {item.largeArt ? (
+                  <img src={item.largeArt} alt="" />
+                ) : (
+                  <p>Imagem não disponível</p>
+                )}
+                <h1>{item.displayName}</h1>
               </CardBody>
             </Card>
           ))}
@@ -90,4 +93,4 @@ const AppSpray = () => {
   );
 };
 
-export default AppSpray;
+export default AppAgents;

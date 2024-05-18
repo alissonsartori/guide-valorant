@@ -1,27 +1,17 @@
 import React, { useState, useEffect } from "react";
-import {
-  SimpleGrid,
-  Card,
-  CardBody,
-  CardFooter,
-  Image,
-  Box,
-  Icon,
-  Button,
-  CircularProgress
-} from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { SimpleGrid, Card, CardBody, Image, Box, Icon, CircularProgress } from "@chakra-ui/react";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
-import "./weapons-styles.css"
+import "../../global-styles.css"
+import { DataSpray } from "../../../types";
 
-const AppWeapons = () => {
-  const [data, setData] = useState([]);
-  const [error, setError] = useState("");
+const AppSpray = () => {
+  const [data, setData] = useState<DataSpray[]>([]);
+  const [error, setError] = useState<string | null>("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://valorant-api.com/v1/weapons");
+        const response = await fetch("https://valorant-api.com/v1/sprays");
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
@@ -36,7 +26,7 @@ const AppWeapons = () => {
   }, []);
 
   return (
-    <div className="body-weapons">
+    <div className="body-grid">
       <div className="header">
         <a href="/">
           <Icon
@@ -47,7 +37,7 @@ const AppWeapons = () => {
           />
         </a>
         <div className="h1-header">
-          <h1>Weapons</h1>
+          <h1>Sprays</h1>
         </div>
       </div>
       {error && <div>Error: {error}</div>}
@@ -63,7 +53,7 @@ const AppWeapons = () => {
           <CircularProgress isIndeterminate color="#FF4655" />
         </Box>
       ) : (
-        <SimpleGrid columns={[1, 3]} spacing={10}>
+        <SimpleGrid columns={[1, 5]} spacing={10}>
           {data.map((item, index) => (
             <Card
               key={index}
@@ -80,26 +70,14 @@ const AppWeapons = () => {
                 alignItems={"center"}
                 gap={"20px"}
               >
-                <Box h={"100%"}>
-                  <Image
-                    className="img-weapon"
-                    src={item.displayIcon}
-                    alt="icon"
-                  />
+                <Box>
+                  {item.fullTransparentIcon && (
+                    <Image src={item.fullTransparentIcon} alt="icon" />
+                  )}
+                  {!item.fullTransparentIcon && <p>Imagem não encontrada</p>}
                 </Box>
-                <h1>{item.displayName}</h1>
+                <p>{item.displayName}</p>
               </CardBody>
-              <CardFooter>
-                <Link to={`/weapons/${item.uuid}`}>
-                  <Button
-                    border={"1px solid #FF4655"}
-                    variant="outline"
-                    color={"#FF4655"}
-                  >
-                    More
-                  </Button>
-                </Link>
-              </CardFooter>
             </Card>
           ))}
         </SimpleGrid>
@@ -108,4 +86,4 @@ const AppWeapons = () => {
   );
 };
 
-export default AppWeapons;
+export default AppSpray;

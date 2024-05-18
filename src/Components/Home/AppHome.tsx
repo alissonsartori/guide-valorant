@@ -1,4 +1,5 @@
-import { SimpleGrid, Image, Box } from "@chakra-ui/react";
+import React from "react";
+import { SimpleGrid, Image } from "@chakra-ui/react";
 import "./home-styles.css";
 import "../../global-styles.css";
 import agentsURL from "../../../public/agents.png"

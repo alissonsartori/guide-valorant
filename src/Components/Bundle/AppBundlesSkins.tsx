@@ -8,16 +8,14 @@ import {
   Box,
   Image,
 } from "@chakra-ui/react";
-import "./skins-styles.css"
 import { ChevronLeftIcon } from "@chakra-ui/icons";
 import { useParams } from "react-router-dom";
-import "../../global-styles.css"
-import "./skins-styles.css"
+import { DataBundles, DataSkins } from "../../../types";
 
 const AppAgent = () => {
-  const [data, setData] = useState(null);
-  const [dataSkin, setDataSkin] = useState(null);
-  const [error, setError] = useState("");
+  const [data, setData] = useState<DataBundles | null>(null);
+  const [dataSkins, setDataSkins] = useState<DataSkins[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   const { id } = useParams();
 
@@ -25,36 +23,32 @@ const AppAgent = () => {
     try {
       const response = await fetch(`https://valorant-api.com/v1/bundles/${id}`);
       if (!response.ok) {
-        throw new Error("Failed to fetch data");
+        throw new Error("Failed to fetch bundle data");
       }
       const jsonData = await response.json();
-
       setData(jsonData.data);
     } catch (error) {
       setError(error.message);
     }
   };
-  useEffect(() => {
-    fetchData();
-  }, []);
 
-  const fetchDataSkin = async () => {
+  const fetchDataSkins = async () => {
     try {
       const response = await fetch(`https://valorant-api.com/v1/weapons/skins`);
       if (!response.ok) {
-        throw new Error("Failed to fetch data");
+        throw new Error("Failed to fetch skins data");
       }
       const jsonData = await response.json();
-      console.log(jsonData);
-
-      setDataSkin(jsonData.data);
+      setDataSkins(jsonData.data);
     } catch (error) {
       setError(error.message);
     }
   };
+
   useEffect(() => {
-    fetchDataSkin();
-  }, []);
+    fetchData();
+    fetchDataSkins();
+  }, [id]);
 
   return (
     <div className="body-grid">
@@ -81,7 +75,7 @@ const AppAgent = () => {
               flexWrap={"wrap"}
               justifyContent={"center"}
               alignItems={"center"}
-              backgroundImage={data.displayIcon}
+              backgroundImage={`${data.displayIcon}`}
               backgroundPosition={"center"}
               height={"50vh"}
               marginBottom={"20px"}
@@ -91,28 +85,29 @@ const AppAgent = () => {
                   background-size: cover;
                 }
               `}
-            ></CardHeader>
+            />
             <h1>{data.displayName}</h1>
             <SimpleGrid columns={[1, 3]} spacing={10}>
-              {dataSkin &&
-                dataSkin
-                  .filter((skin) => skin.displayName.includes(data.displayName))
-                  .map((item, index) => (
-                    <CardBody
-                      key={index}
-                      backgroundColor="transparent"
-                      borderColor="#FF4655"
-                      borderWidth="1px"
-                      borderStyle="solid"
-                      p="4"
-                      color="#fffff"
-                    >
-                      <Box h={"100%"}>
-                        <h1>{item.displayName}</h1>
-                        <Image src={item.displayIcon} alt="skin" />
-                      </Box>
-                    </CardBody>
-                  ))}
+              {dataSkins
+                .filter((skin) =>
+                  skin.displayName.toLowerCase().includes(data.displayName.toLowerCase())
+                )
+                .map((item, index) => (
+                  <CardBody
+                    key={index}
+                    backgroundColor="transparent"
+                    borderColor="#FF4655"
+                    borderWidth="1px"
+                    borderStyle="solid"
+                    p="4"
+                    color="#fffff"
+                  >
+                    <Box h={"100%"}>
+                      <h1>{item.displayName}</h1>
+                      <Image src={item.displayIcon} alt="skin" />
+                    </Box>
+                  </CardBody>
+                ))}
             </SimpleGrid>
           </Card>
         </div>

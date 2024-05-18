@@ -1,33 +1,31 @@
 import React, { useState, useEffect } from "react";
-import "./agents-styles.css";
 import {
   SimpleGrid,
   Card,
   CardBody,
   CardFooter,
-  Icon,
   Button,
-  CircularProgress,
+  Icon,
   Box,
+  CircularProgress
 } from "@chakra-ui/react";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
+import "../../global-styles.css"
+import { DataBundles } from "../../../types";
 
-const AppAgents = () => {
-  const [data, setData] = useState([]);
+const AppBundles = () => {
+  const [data, setData] = useState<DataBundles[]>([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          "https://valorant-api.com/v1/agents?isPlayableCharacter=true"
-        );
+        const response = await fetch("https://valorant-api.com/v1/bundles");
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
         const jsonData = await response.json();
-
         setData(jsonData.data);
       } catch (error) {
         setError(error.message);
@@ -38,7 +36,7 @@ const AppAgents = () => {
   }, []);
 
   return (
-    <div className="body-agents">
+    <div className="body-grid">
       <div className="header">
         <a href="/">
           <Icon
@@ -49,7 +47,7 @@ const AppAgents = () => {
           />
         </a>
         <div className="h1-header">
-          <h1>Agents</h1>
+          <h1>Bundles</h1>
         </div>
       </div>
       {error && <div>Error: {error}</div>}
@@ -65,7 +63,7 @@ const AppAgents = () => {
           <CircularProgress isIndeterminate color="#FF4655" />
         </Box>
       ) : (
-        <SimpleGrid columns={[1, 2]} spacing={10}>
+        <SimpleGrid columns={[1, 3]} spacing={10}>
           {data.map((item, index) => (
             <Card
               key={index}
@@ -81,17 +79,12 @@ const AppAgents = () => {
                 flexDirection={"column"}
                 alignItems={"center"}
                 gap={"20px"}
-                padding={"none"}
               >
-                {item.bustPortrait ? (
-                  <img src={item.bustPortrait} alt="" />
-                ) : (
-                  <p>Imagem não disponível</p>
-                )}
+                <img src={item.displayIcon} alt="" />
                 <h1>{item.displayName}</h1>
               </CardBody>
               <CardFooter>
-                <Link to={`/agents/${item.uuid}`}>
+                <Link to={`/bundles/${item.uuid}`}>
                   <Button
                     border={"1px solid #FF4655"}
                     variant="outline"
@@ -109,4 +102,4 @@ const AppAgents = () => {
   );
 };
 
-export default AppAgents;
+export default AppBundles;

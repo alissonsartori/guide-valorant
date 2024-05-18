@@ -2,7 +2,7 @@ import "./header-styles.css";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink } from "@chakra-ui/react";
 import AppMenu from "./AppMenu";
 import React, { useState, useEffect } from "react";
-import riotLogoUrl from "../../../public/RIOTLOGO.png"
+import riotLogoUrl from '../../../public/RIOTLOGO.png';
 import logoUrl from "../../../public/logo.png"
 
 const AppHome = () => {

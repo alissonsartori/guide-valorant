@@ -2,6 +2,7 @@
 
 .body-agent {
   display: flex;
+  flex-direction: column;
   background-color: #0f1923;
   color: #ffffff;
 }
@@ -40,7 +41,7 @@ p {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid #FF4655;
+  border: 1px solid #ff4655;
 }
 
 span {
