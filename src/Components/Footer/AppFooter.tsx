@@ -1,22 +1,48 @@
-import React from "react";
-import "./footer-styles.css";
-import packageJson from "../../../package.json";
+import React from 'react';
+import './footer-styles.css';
+import packageJson from '../../../package.json';
 
 const Footer = () => {
   return (
-    <div className="footer">
-      <p>
-        © 2020-2024 Riot Games, Inc. RIOT GAMES, VALORANT e todos os logotipos
-        associados são marcas comerciais, marcas de serviço e/ou marcas
-        registradas da Riot Games, Inc.
-      </p>
-      <p>
-        <a href="https://playvalorant.com/pt-br/?gad_source=1&gclid=CjwKCAjw9IayBhBJEiwAVuc3fpQ2M4zDtjdMAL3JQMb2JSwcpEVGNkc6D8KVt3SOwPy5P-TuPFSRqRoCXQoQAvD_BwE&gclsrc=aw.ds">
-          Jogue Agora
-        </a>
-      </p>
-      <pre>{`v${packageJson.version}`}</pre>
-    </div>
+    <footer className="footer">
+      <div className="footer__content">
+        <div className="footer__text">
+          © 2020-2024 Riot Games, Inc. RIOT GAMES, VALORANT e todos os
+          logotipos associados são marcas comerciais, marcas de serviço e/ou
+          marcas registradas da Riot Games, Inc.
+        </div>
+        <div className="footer__links">
+          <a
+            className="footer__link"
+            href="https://playvalorant.com/pt-br/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Jogue Agora
+          </a>
+          <a
+            className="footer__link"
+            href="https://www.riotgames.com/pt-br"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Riot Games
+          </a>
+          <a
+            className="footer__link"
+            href="https://github.com/alissoncavalcante/guide-valorant"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub
+          </a>
+        </div>
+        <div className="footer__divider" />
+        <div className="footer__bottom">
+          <span>Versão {packageJson.version}</span>
+        </div>
+      </div>
+    </footer>
   );
 };
 

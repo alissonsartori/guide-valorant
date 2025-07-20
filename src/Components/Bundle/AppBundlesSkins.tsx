@@ -1,119 +1,91 @@
-import React, { useState, useEffect } from "react";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Icon,
-  SimpleGrid,
-  Box,
-  Image,
-} from "@chakra-ui/react";
-import { ChevronLeftIcon } from "@chakra-ui/icons";
-import { useParams } from "react-router-dom";
-import { DataBundles, DataSkins } from "../../../types";
+import React, { useState, useEffect } from 'react';
+import { Icon } from '@chakra-ui/react';
+import { ChevronLeftIcon } from '@chakra-ui/icons';
+import { useParams, useNavigate } from 'react-router-dom';
+import './skins-bundle-styles.css';
 
-const AppAgent = () => {
-  const [data, setData] = useState<DataBundles | null>(null);
-  const [dataSkins, setDataSkins] = useState<DataSkins[]>([]);
+const AppBundlesSkins = () => {
+  const [data, setData] = useState<any | null>(null);
+  const [dataSkins, setDataSkins] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const { id } = useParams();
-
-  const fetchData = async () => {
-    try {
-      const response = await fetch(`https://valorant-api.com/v1/bundles/${id}`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch bundle data");
-      }
-      const jsonData = await response.json();
-      setData(jsonData.data);
-    } catch (error) {
-      setError(error.message);
-    }
-  };
-
-  const fetchDataSkins = async () => {
-    try {
-      const response = await fetch(`https://valorant-api.com/v1/weapons/skins`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch skins data");
-      }
-      const jsonData = await response.json();
-      setDataSkins(jsonData.data);
-    } catch (error) {
-      setError(error.message);
-    }
-  };
+  const navigate = useNavigate();
 
   useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const [bundleRes, skinsRes] = await Promise.all([
+          fetch(`https://valorant-api.com/v1/bundles/${id}`),
+          fetch(`https://valorant-api.com/v1/weapons/skins`),
+        ]);
+        if (!bundleRes.ok) throw new Error('Erro ao buscar bundle');
+        if (!skinsRes.ok) throw new Error('Erro ao buscar skins');
+        const bundleJson = await bundleRes.json();
+        const skinsJson = await skinsRes.json();
+        setData(bundleJson.data);
+        setDataSkins(skinsJson.data);
+      } catch (err: any) {
+        setError(err.message || 'Erro desconhecido');
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchData();
-    fetchDataSkins();
   }, [id]);
 
+  const filteredSkins =
+    data && dataSkins.length
+      ? dataSkins.filter(
+          skin =>
+            skin.displayName &&
+            data.displayName &&
+            skin.displayName
+              .toLowerCase()
+              .includes(data.displayName.toLowerCase())
+        )
+      : [];
+
   return (
-    <div className="body-grid">
-      {error && <div>Error: {error}</div>}
+    <div className="bundle-skins-container">
+      {loading && <div className="bundle-loading">Carregando...</div>}
+      {error && <div className="bundle-error">Erro: {error}</div>}
       {data && (
-        <div>
-          <div className="header">
-            <a href="/bundles">
-              <Icon
-                as={ChevronLeftIcon}
-                width="3em"
-                height="3em"
-                color={"#FF4655"}
-              />
-            </a>
-            <div>
-              <h1>Bundle Details</h1>
-            </div>
-          </div>
-          <Card backgroundColor="transparent" color="#fffff">
-            <CardHeader
-              display={"flex"}
-              flexDirection={"row-reverse"}
-              flexWrap={"wrap"}
-              justifyContent={"center"}
-              alignItems={"center"}
-              backgroundImage={`${data.displayIcon}`}
-              backgroundPosition={"center"}
-              height={"50vh"}
-              marginBottom={"20px"}
-              css={`
-                @media (max-width: 480px) {
-                  height: 19vh;
-                  background-size: cover;
-                }
-              `}
+        <main className="bundle-main">
+          <div className="bundle-image-wrapper">
+            <img
+              src={data.displayIcon}
+              alt={data.displayName}
+              className="bundle-image"
             />
-            <h1>{data.displayName}</h1>
-            <SimpleGrid columns={[1, 3]} spacing={10}>
-              {dataSkins
-                .filter((skin) =>
-                  skin.displayName.toLowerCase().includes(data.displayName.toLowerCase())
-                )
-                .map((item, index) => (
-                  <CardBody
-                    key={index}
-                    backgroundColor="transparent"
-                    borderColor="#FF4655"
-                    borderWidth="1px"
-                    borderStyle="solid"
-                    p="4"
-                    color="#fffff"
-                  >
-                    <Box h={"100%"}>
-                      <h1>{item.displayName}</h1>
-                      <Image src={item.displayIcon} alt="skin" />
-                    </Box>
-                  </CardBody>
-                ))}
-            </SimpleGrid>
-          </Card>
-        </div>
+          </div>
+          <section className="bundle-skins-list">
+            <h2 className="skins-section-title">Skins do Bundle</h2>
+            {filteredSkins.length === 0 && (
+              <div className="no-skins-msg">
+                Nenhuma skin encontrada para este bundle.
+              </div>
+            )}
+            <div className="skins-grid">
+              {filteredSkins.map((item, idx) => (
+                <div className="skin-card" key={idx}>
+                  <img
+                    src={item.displayIcon}
+                    alt={item.displayName}
+                    className="skin-img"
+                  />
+                  <div className="skin-name">{item.displayName}</div>
+                </div>
+              ))}
+            </div>
+          </section>
+        </main>
       )}
     </div>
   );
 };
 
-export default AppAgent;
+export default AppBundlesSkins;

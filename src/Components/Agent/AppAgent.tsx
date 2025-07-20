@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import "./agent-styles.css";
-import { Card, CardHeader, CardBody, Icon, Spinner } from "@chakra-ui/react";
-import { ChevronLeftIcon } from "@chakra-ui/icons";
-import { useParams } from "react-router-dom";
-import "../../global-styles.css";
-import { DataAgent } from "../../../types";
+import React, { useState, useEffect } from 'react';
+import './agent-styles.css';
+import { Card, CardHeader, CardBody, Icon, Spinner } from '@chakra-ui/react';
+import { ChevronLeftIcon } from '@chakra-ui/icons';
+import { useParams } from 'react-router-dom';
+import '../../global-styles.css';
+import { DataAgent } from '../../../types';
 
 const AppAgent = () => {
   const [data, setData] = useState<DataAgent | null>(null);
@@ -20,7 +20,7 @@ const AppAgent = () => {
           `https://valorant-api.com/v1/agents/${id}`
         );
         if (!response.ok) {
-          throw new Error("Failed to fetch data");
+          throw new Error('Failed to fetch data');
         }
         const jsonData = await response.json();
         setData(jsonData.data);
@@ -53,7 +53,7 @@ const AppAgent = () => {
             as={ChevronLeftIcon}
             width="3em"
             height="3em"
-            color={"#FF4655"}
+            color={'#FF4655'}
           />
         </a>
         <div className="h1-header">
@@ -62,15 +62,15 @@ const AppAgent = () => {
       </div>
       <Card backgroundColor="transparent" p="4" color="#fffff">
         <CardHeader
-          display={"flex"}
-          flexDirection={"row-reverse"}
-          flexWrap={"wrap"}
-          justifyContent={"center"}
-          alignItems={"center"}
+          display={'flex'}
+          flexDirection={'row-reverse'}
+          flexWrap={'wrap'}
+          justifyContent={'center'}
+          alignItems={'center'}
           backgroundImage={`${data.background}`}
-          backgroundRepeat={"no-repeat"}
-          backgroundPosition={"center"}
-          backgroundSize={"23em"}
+          backgroundRepeat={'no-repeat'}
+          backgroundPosition={'center'}
+          backgroundSize={'23em'}
           css={`
             @media (max-width: 480px) {
               background-size: 13em;
@@ -86,7 +86,7 @@ const AppAgent = () => {
             </p>
           </div>
         </CardHeader>
-        <CardBody display={"flex"} flexDirection={"column"} gap={"30px"}>
+        <CardBody display={'flex'} flexDirection={'column'} gap={'30px'}>
           <div className="role">
             <p>
               <span>Type: </span>

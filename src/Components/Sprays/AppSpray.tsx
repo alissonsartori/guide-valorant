@@ -1,87 +1,71 @@
-import React, { useState, useEffect } from "react";
-import { SimpleGrid, Card, CardBody, Image, Box, Icon, CircularProgress } from "@chakra-ui/react";
-import { ChevronLeftIcon } from "@chakra-ui/icons";
-import "../../global-styles.css"
-import { DataSpray } from "../../../types";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import './sprays-styles.css';
+
+type DataSpray = {
+  uuid: string;
+  displayName: string;
+  fullTransparentIcon?: string;
+};
 
 const AppSpray = () => {
   const [data, setData] = useState<DataSpray[]>([]);
-  const [error, setError] = useState<string | null>("");
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://valorant-api.com/v1/sprays");
+        const response = await fetch('https://valorant-api.com/v1/sprays');
         if (!response.ok) {
-          throw new Error("Failed to fetch data");
+          throw new Error('Failed to fetch data');
         }
         const jsonData = await response.json();
         setData(jsonData.data);
-      } catch (error) {
+      } catch (error: any) {
         setError(error.message);
+      } finally {
+        setLoading(false);
       }
     };
-
     fetchData();
   }, []);
 
   return (
-    <div className="body-grid">
-      <div className="header">
-        <a href="/">
-          <Icon
-            as={ChevronLeftIcon}
-            width="3em"
-            height="3em"
-            color={"#FF4655"}
-          />
-        </a>
-        <div className="h1-header">
-          <h1>Sprays</h1>
-        </div>
-      </div>
-      {error && <div>Error: {error}</div>}
-      {data.length === 0 ? (
-        <Box
-          height="50vh"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          flexDirection="column"
-          gap="3rem"
-        >
-          <CircularProgress isIndeterminate color="#FF4655" />
-        </Box>
-      ) : (
-        <SimpleGrid columns={[1, 5]} spacing={10}>
-          {data.map((item, index) => (
-            <Card
-              key={index}
-              backgroundColor="transparent"
-              borderColor="#FF4655"
-              borderWidth="1px"
-              borderStyle="solid"
-              p="4"
-              color="#fffff"
-            >
-              <CardBody
-                display={"flex"}
-                flexDirection={"column"}
-                alignItems={"center"}
-                gap={"20px"}
-              >
-                <Box>
-                  {item.fullTransparentIcon && (
-                    <Image src={item.fullTransparentIcon} alt="icon" />
-                  )}
-                  {!item.fullTransparentIcon && <p>Imagem não encontrada</p>}
-                </Box>
-                <p>{item.displayName}</p>
-              </CardBody>
-            </Card>
+    <div className="sprays-page">
+      <header className="sprays-header">
+        <Link to="/" className="sprays-back">
+          <span className="sprays-back-icon">←</span>
+          <span className="sprays-back-text">Voltar</span>
+        </Link>
+        <h1 className="sprays-title">Sprays</h1>
+      </header>
+      <main className="sprays-main">
+        {loading && <div className="sprays-loading">Carregando...</div>}
+        {error && <div className="sprays-error">Erro: {error}</div>}
+        <div className="sprays-grid">
+          {data.map(item => (
+            <div className="spray-card" key={item.uuid}>
+              <div className="spray-card-img-wrapper">
+                {item.fullTransparentIcon ? (
+                  <img
+                    className="spray-card-img"
+                    src={item.fullTransparentIcon}
+                    alt={item.displayName}
+                  />
+                ) : (
+                  <span className="spray-card-img-notfound">
+                    Imagem não encontrada
+                  </span>
+                )}
+              </div>
+              <div className="spray-card-footer">
+                <span className="spray-card-name">{item.displayName}</span>
+              </div>
+            </div>
           ))}
-        </SimpleGrid>
-      )}
+        </div>
+      </main>
     </div>
   );
 };

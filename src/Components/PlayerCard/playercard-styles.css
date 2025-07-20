@@ -1,0 +1,91 @@
+.playercard-body-grid {
+  min-height: 100vh;
+  background: linear-gradient(120deg, #1a1a1a 60%, #ff4655 100%);
+  padding: 2rem 1rem 3rem 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.playercard-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.playercard-h1-header h1 {
+  color: #fff;
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+.playercard-error {
+  color: #ff4655;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.playercard-grid {
+  margin-top: 1rem;
+}
+
+.playercard-card {
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+  box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.25);
+  border-radius: 1rem;
+  overflow: hidden;
+  background: rgba(30, 30, 30, 0.95);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.playercard-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 8px 32px 0 #ff4655;
+}
+
+.playercard-img {
+  width: 180px;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  border: 2px solid #ff4655;
+  background: #222;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+}
+
+.playercard-title {
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  margin: 0;
+  margin-top: 0.5rem;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 900px) {
+  .playercard-img {
+    width: 120px;
+    height: 170px;
+  }
+  .playercard-h1-header h1 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .playercard-grid {
+    gap: 1rem !important;
+  }
+  .playercard-img {
+    width: 90px;
+    height: 120px;
+  }
+}

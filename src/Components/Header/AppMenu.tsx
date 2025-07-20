@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 import {
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
   IconButton,
-} from "@chakra-ui/react";
-import { HamburgerIcon } from "@chakra-ui/icons";
+} from '@chakra-ui/react';
+import { HamburgerIcon } from '@chakra-ui/icons';
 
 const AppMenu = () => {
   return (
@@ -16,10 +16,10 @@ const AppMenu = () => {
         aria-label="Options"
         icon={<HamburgerIcon />}
         variant="outline"
-        backgroundColor={"#FF4655"}
-        border={"none"}
+        backgroundColor={'#FF4655'}
+        border={'none'}
       />
-      <MenuList color={"#FF4655"}>
+      <MenuList color={'#FF4655'}>
         <MenuItem as="a" href="/">
           Home
         </MenuItem>

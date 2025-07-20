@@ -1,0 +1,148 @@
+.bundles-body {
+  min-height: 100vh;
+  background: #0f1923;
+  padding: 2rem 1rem;
+  color: #fff;
+}
+
+.bundles-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.back-link {
+  text-decoration: none;
+}
+
+.chevron-left {
+  font-size: 2.5rem;
+  color: #ff4655;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+
+.back-link:hover .chevron-left {
+  color: #fff;
+}
+
+.bundles-title h1 {
+  font-size: 2.5rem;
+  color: #ff4655;
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+.bundles-error {
+  color: #ff4655;
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+}
+
+.bundles-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
+
+.spinner {
+  border: 6px solid #222;
+  border-top: 6px solid #ff4655;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.bundles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  justify-items: center;
+}
+
+.bundle-card {
+  width: 100%;
+  height: auto;
+  background: rgba(20, 20, 30, 0.95);
+  border: 2px solid #ff4655;
+  border-radius: 1rem;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+
+.bundle-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 8px 32px #ff4655aa;
+}
+
+.bundle-card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 2rem 1rem 1rem 1rem;
+}
+
+.bundle-img {
+  width: 100%;
+  height: 80%;
+  object-fit: contain;
+  border-radius: 0.5rem;
+  background: #181c22;
+  border: 1px solid #222;
+  margin-bottom: 0.5rem;
+}
+
+.bundle-name {
+  font-size: 1.3rem;
+  color: #fff;
+  text-align: center;
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+.bundle-card-footer {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.bundle-link {
+  text-decoration: none;
+}
+
+.bundle-more-btn {
+  background: transparent;
+  color: #ff4655;
+  border: 2px solid #ff4655;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+
+.bundle-more-btn:hover {
+  background: #ff4655;
+  color: #fff;
+}

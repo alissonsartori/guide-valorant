@@ -1,0 +1,22 @@
+/* 
+ * Índice principal dos estilos do Valorant Guide
+ * Importe este arquivo nos componentes que precisam de todos os estilos
+ */
+
+/* Estilos base e sistema de design */
+@import './tokens.css';
+@import './base.css';
+@import './layout.css';
+@import './components.css';
+@import './utilities.css';
+@import './animations.css';
+
+/* 
+ * Para usar apenas estilos específicos, importe diretamente:
+ * @import './styles/tokens.css';     - Design tokens e variáveis
+ * @import './styles/base.css';       - Reset e estilos base
+ * @import './styles/layout.css';     - Sistema de layout e grid
+ * @import './styles/components.css'; - Componentes reutilizáveis
+ * @import './styles/utilities.css';  - Classes utilitárias
+ * @import './styles/animations.css'; - Animações customizadas
+ */

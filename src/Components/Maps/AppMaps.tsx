@@ -1,105 +1,68 @@
-import React, { useState, useEffect } from "react";
-import {
-  SimpleGrid,
-  Card,
-  CardBody,
-  CardFooter,
-  Box,
-  Icon,
-  Button,
-  CircularProgress,
-} from "@chakra-ui/react";
-import { Link } from "react-router-dom";
-import { ChevronLeftIcon } from "@chakra-ui/icons";
-import "../../global-styles.css";
-import { DataMaps } from "../../../types";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import './maps-styles.css';
+
+type DataMaps = {
+  uuid: string;
+  displayName: string;
+  listViewIconTall: string;
+};
 
 const AppMaps = () => {
   const [data, setData] = useState<DataMaps[]>([]);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://valorant-api.com/v1/maps");
+        const response = await fetch('https://valorant-api.com/v1/maps');
         if (!response.ok) {
-          throw new Error("Failed to fetch data");
+          throw new Error('Failed to fetch data');
         }
         const jsonData = await response.json();
         setData(jsonData.data);
-      } catch (error) {
+      } catch (error: any) {
         setError(error.message);
+      } finally {
+        setLoading(false);
       }
     };
-
     fetchData();
   }, []);
 
   return (
-    <div className="body-grid">
-      <div className="header">
-        <a href="/">
-          <Icon
-            as={ChevronLeftIcon}
-            width="3em"
-            height="3em"
-            color={"#FF4655"}
-          />
-        </a>
-        <div className="h1-header">
-          <h1>Maps</h1>
-        </div>
-      </div>
-      {error && <div>Error: {error}</div>}
-      {data.length === 0 ? (
-        <Box
-          height="50vh"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          flexDirection="column"
-          gap="3rem"
-        >
-          <CircularProgress isIndeterminate color="#FF4655" />
-        </Box>
-      ) : (
-        <SimpleGrid columns={[1, 4]} spacing={10}>
-          {data.map((item, index) => (
-            <Card
-              key={index}
-              backgroundColor="transparent"
-              borderColor="#FF4655"
-              borderWidth="1px"
-              borderStyle="solid"
-              p="4"
-              color="#fffff"
-            >
-              <CardBody
-                display={"flex"}
-                flexDirection={"column"}
-                alignItems={"center"}
-                gap={"20px"}
-              >
-                <Box>
-                  <img src={item.listViewIconTall} alt="" />
-                </Box>
-                <p>{item.displayName}</p>
-              </CardBody>
-              <CardFooter>
-                <Link to={`/maps/${item.uuid}`}>
-                  <Button
-                    border={"1px solid #FF4655"}
-                    variant="outline"
-                    color={"#FF4655"}
-                  >
-                    More
-                  </Button>
+    <div className="maps-page">
+      <header className="maps-header">
+        <Link to="/" className="maps-back">
+          <span className="maps-back-icon">←</span>
+          <span className="maps-back-text">Voltar</span>
+        </Link>
+        <h1 className="maps-title">Maps</h1>
+      </header>
+      <main className="maps-main">
+        {loading && <div className="maps-loading">Carregando...</div>}
+        {error && <div className="maps-error">Erro: {error}</div>}
+        <div className="maps-grid">
+          {data.map(item => (
+            <div className="map-card" key={item.uuid}>
+              <div className="map-card-img-wrapper">
+                <img
+                  className="map-card-img"
+                  src={item.listViewIconTall}
+                  alt={item.displayName}
+                />
+              </div>
+              <div className="map-card-footer">
+                <span className="map-card-name">{item.displayName}</span>
+                <Link to={`/maps/${item.uuid}`} className="map-card-link">
+                  Mais detalhes
                 </Link>
-              </CardFooter>
-            </Card>
+              </div>
+            </div>
           ))}
-        </SimpleGrid>
-      )}
+        </div>
+      </main>
     </div>
   );
 };

@@ -1,110 +1,164 @@
-import React, { useState, useEffect } from "react";
-import "./agents-styles.css";
-import {
-  SimpleGrid,
-  Card,
-  CardBody,
-  CardFooter,
-  Icon,
-  Button,
-  CircularProgress,
-  Box,
-} from "@chakra-ui/react";
-import { ChevronLeftIcon } from "@chakra-ui/icons";
-import { Link } from "react-router-dom";
-import { DataAgents } from "../../../types";
+import React, { useState, useEffect } from 'react';
+import './agents-styles.css';
+import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
+import { Icon, CircularProgress, Box, Button } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
+import { DataAgent } from '../../../types';
+
+// Mapeamento manual de país e gênero
+const AGENT_EXTRA = {
+  Killjoy: { country: 'Germany', gender: 'Female' },
+  Raze: { country: 'Brazil', gender: 'Female' },
+  Brimstone: { country: 'USA', gender: 'Male' },
+  Viper: { country: 'USA', gender: 'Female' },
+  Cypher: { country: 'Morocco', gender: 'Male' },
+  Sova: { country: 'Russia', gender: 'Male' },
+  Sage: { country: 'China', gender: 'Female' },
+  Phoenix: { country: 'UK', gender: 'Male' },
+  Omen: { country: 'Unknown', gender: 'Male' },
+  Jett: { country: 'South Korea', gender: 'Female' },
+  Breach: { country: 'Sweden', gender: 'Male' },
+  Skye: { country: 'Australia', gender: 'Female' },
+  Yoru: { country: 'Japan', gender: 'Male' },
+  Astra: { country: 'Ghana', gender: 'Female' },
+  KAYO: { country: 'Unknown', gender: 'Other' },
+  Chamber: { country: 'France', gender: 'Male' },
+  Neon: { country: 'Philippines', gender: 'Female' },
+  Fade: { country: 'Turkey', gender: 'Female' },
+  Harbor: { country: 'India', gender: 'Male' },
+  Gekko: { country: 'USA', gender: 'Male' },
+  Deadlock: { country: 'Norway', gender: 'Female' },
+  // Adicione outros agentes conforme necessário
+};
 
 const AppAgents = () => {
-  const [data, setData] = useState<DataAgents[]>([])
-  const [error, setError] = useState("");
+  const [data, setData] = useState<DataAgent[]>([]);
+  const [error, setError] = useState('');
+  const [current, setCurrent] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://valorant-api.com/v1/agents?isPlayableCharacter=true"
+          'https://valorant-api.com/v1/agents?isPlayableCharacter=true'
         );
         if (!response.ok) {
-          throw new Error("Failed to fetch data");
+          throw new Error('Failed to fetch data');
         }
         const jsonData = await response.json();
-
         setData(jsonData.data);
       } catch (error) {
         setError(error.message);
       }
     };
-
     fetchData();
   }, []);
 
+  const handlePrev = () => {
+    setCurrent(prev => (prev === 0 ? data.length - 1 : prev - 1));
+  };
+  const handleNext = () => {
+    setCurrent(prev => (prev === data.length - 1 ? 0 : prev + 1));
+  };
+
   return (
-    <div className="body-agents">
-      <div className="header">
-        <a href="/">
-          <Icon
-            as={ChevronLeftIcon}
-            width="3em"
-            height="3em"
-            color={"#FF4655"}
-          />
-        </a>
-        <div className="h1-header">
-          <h1>Agents</h1>
-        </div>
-      </div>
-      {error && <div>Error: {error}</div>}
+    <div className="agents agents__carousel-bg">
+      {error && <div className="agents__error">Error: {error}</div>}
       {data.length === 0 ? (
-        <Box
-          height="50vh"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          flexDirection="column"
-          gap="3rem"
-        >
+        <Box className="agents__loading">
           <CircularProgress isIndeterminate color="#FF4655" />
         </Box>
       ) : (
-        <SimpleGrid columns={[1, 2]} spacing={10}>
-          {data.map((item, index) => (
-            <Card
-              key={index}
-              backgroundColor="transparent"
-              borderColor="#FF4655"
-              borderWidth="1px"
-              borderStyle="solid"
-              p="4"
-              color="#fffff"
-            >
-              <CardBody
-                display={"flex"}
-                flexDirection={"column"}
-                alignItems={"center"}
-                gap={"20px"}
-                padding={"none"}
-              >
-                {item.bustPortrait ? (
-                  <img src={item.bustPortrait} alt="" />
+        <div className="agents__carousel agents__carousel--split">
+          <button
+            className="carousel__arrow carousel__arrow--left"
+            onClick={handlePrev}
+            aria-label="Anterior"
+          >
+            <ChevronLeftIcon boxSize={10} color="#FF4655" />
+          </button>
+          <div className="carousel__content carousel__content--split">
+            {/* Lado esquerdo: vídeo/imagem, habilidades, infos */}
+            <div className="carousel__left">
+              <div className="carousel__media">
+                {data[current].displayIcon ? (
+                  <img
+                    className="carousel__media-img"
+                    src={data[current].displayIcon}
+                    alt={data[current].displayName}
+                  />
                 ) : (
                   <p>Imagem não disponível</p>
                 )}
-                <h1>{item.displayName}</h1>
-              </CardBody>
-              <CardFooter>
-                <Link to={`/agents/${item.uuid}`}>
-                  <Button
-                    border={"1px solid #FF4655"}
-                    variant="outline"
-                    color={"#FF4655"}
-                  >
-                    More
-                  </Button>
-                </Link>
-              </CardFooter>
-            </Card>
-          ))}
-        </SimpleGrid>
+              </div>
+              <div className="carousel__bio-block">
+                <h3 className="carousel__bio-title">//BIOGRAPHY//</h3>
+                <p className="carousel__bio-text">
+                  {data[current].description}
+                </p>
+                <div className="carousel__info-row">
+                  <span className="carousel__info-label">
+                    {AGENT_EXTRA[data[current].displayName]?.gender ||
+                      'Unknown'}
+                  </span>
+                  <span className="carousel__info-desc">Gender</span>
+                  <span className="carousel__info-label">
+                    {AGENT_EXTRA[data[current].displayName]?.country ||
+                      'Unknown'}
+                  </span>
+                  <span className="carousel__info-desc">Location</span>
+                  <span className="carousel__info-label">
+                    {data[current].role?.displayName || 'Unknown'}
+                  </span>
+                  <span className="carousel__info-desc">Role</span>
+                </div>
+              </div>
+              <div className="carousel__abilities">
+                {data[current].abilities.map((ab, idx) => (
+                  <div className="carousel__ability" key={idx}>
+                    {ab.displayIcon && (
+                      <img
+                        className="carousel__ability-icon"
+                        src={ab.displayIcon}
+                        alt={ab.displayName}
+                      />
+                    )}
+                    <span className="carousel__ability-name">
+                      {ab.displayName}
+                    </span>
+                    {ab.description && (
+                      <span className="carousel__ability-tooltip">
+                        {ab.description}
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+            {/* Lado direito: arte do agente e nome na vertical */}
+            <div className="carousel__right">
+              <div className="carousel__vertical-name">
+                {data[current].displayName.split('').map((l, i) => (
+                  <span key={i}>{l}</span>
+                ))}
+              </div>
+              {data[current].fullPortrait && (
+                <img
+                  className="carousel__agent-img"
+                  src={data[current].fullPortrait}
+                  alt={data[current].displayName}
+                />
+              )}
+            </div>
+          </div>
+          <button
+            className="carousel__arrow carousel__arrow--right"
+            onClick={handleNext}
+            aria-label="Próximo"
+          >
+            <ChevronRightIcon boxSize={10} color="#FF4655" />
+          </button>
+        </div>
       )}
     </div>
   );

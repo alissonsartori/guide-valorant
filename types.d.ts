@@ -1,90 +1,102 @@
-export type DataAgents = {
-  uuid: string;
-  displayName: string;
-  bustPortrait: string;
-};
+// Valorant API Types
 
-export type DataAgent = {
-  background: string;
-  fullPortrait: string;
+export interface DataAgent {
+  uuid: string;
   displayName: string;
   description: string;
-  role: {
-    displayName: string;
-    displayIcon: string;
-  };
-  abilities: {
-    displayName: string;
-    displayIcon: string;
-    description: string;
-  }[];
-};
-
-export type DataBuddies = {
-  displayName: string;
   displayIcon: string;
-};
-
-export type DataBundles = {
-  uuid: string;
-  displayName: string;
-  displayIcon: string;
-};
-
-export type DataSkins = {
-  displayName: string;
-  displayIcon: string;
-};
-
-export type DataMaps = {
-  uuid: string;
-  displayName: string;
-  listViewIconTall: string;
-};
-
-export type DataMap = {
-  displayName: string;
-  stylizedBackgroundImage: string;
-  displayIcon: string;
-  coordinates: string;
-};
-
-export type DataPlayerCard = {
-  displayName: string;
-  largeArt: string;
-};
-
-export type DataSpray = {
-  displayName: string;
-  fullTransparentIcon: string;
-};
-
-export type DataWeapon = {
-  displayName: string;
-  displayIcon: string;
-  shopData: {
-    cost: string;
-    category: string;
-  };
-  weaponStats: {
-    shotgunPelletCount: string;
-    firstBulletAccuracy: string;
-    reloadTimeSeconds: string;
-    equipTimeSeconds: string;
-    runSpeedMultiplier: string;
-    magazineSize: string;
-    fireRate: string;
-  };
-  skins: Skin[];
-};
-
-interface Skin {
-  displayName: string;
-  displayIcon?: string;
+  fullPortrait: string;
+  background: string;
+  abilities: Ability[];
+  role: Role;
 }
 
-export type DataWeapons = {
+export interface Ability {
+  slot: string;
+  displayName: string;
+  description: string;
+  displayIcon: string;
+}
+
+export interface Role {
+  uuid: string;
+  displayName: string;
+  description: string;
+  displayIcon: string;
+}
+
+export interface DataWeapons {
+  uuid: string;
+  displayName: string;
+  category: string;
+  defaultSkinUuid: string;
+  displayIcon: string;
+  killStreamIcon: string;
+  weaponStats: WeaponStats;
+  skins: Skin[];
+}
+
+export interface WeaponStats {
+  fireRate: number;
+  magazineSize: number;
+  runSpeedMultiplier: number;
+  equipTimeSeconds: number;
+  reloadTimeSeconds: number;
+  firstBulletAccuracy: number;
+  shotgunPelletCount: number;
+  wallPenetration: string;
+  feature: string;
+  fireMode: string;
+  altFireType: string;
+  adsStats: AdsStats;
+  altShotgunStats: any;
+  airBurstStats: any;
+  damageRanges: DamageRange[];
+}
+
+export interface AdsStats {
+  zoomMultiplier: number;
+  fireRate: number;
+  runSpeedMultiplier: number;
+  burstCount: number;
+  firstBulletAccuracy: number;
+}
+
+export interface DamageRange {
+  rangeStartMeters: number;
+  rangeEndMeters: number;
+  headDamage: number;
+  bodyDamage: number;
+  legDamage: number;
+}
+
+export interface Skin {
+  uuid: string;
+  displayName: string;
+  themeUuid: string;
+  contentTierUuid: string;
+  displayIcon: string;
+  wallpaper: string;
+  assetPath: string;
+  chromas: Chroma[];
+  levels: Level[];
+}
+
+export interface Chroma {
   uuid: string;
   displayName: string;
   displayIcon: string;
-};
+  fullRender: string;
+  swatch: string;
+  streamedVideo: string;
+  assetPath: string;
+}
+
+export interface Level {
+  uuid: string;
+  displayName: string;
+  levelItem: string;
+  displayIcon: string;
+  streamedVideo: string;
+  assetPath: string;
+}
